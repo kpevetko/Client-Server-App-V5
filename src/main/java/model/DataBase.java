@@ -1,4 +1,4 @@
-package main.java;
+package model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,21 +16,18 @@ public class DataBase {
     String DB_URL, DB_USER, DB_PASS;
     //
     Statement pstmt = null;
-    //список результатов запроса
-    ResultSet rs = null;
-
     //приватная статическая ссылка класса на его объект
     private static DataBase myDBObject;
 
     //открытый статический метод используемый для получения объекта нашего класса
-    public static DataBase getMyDBObject() throws SQLException, IOException {
+    public static DataBase getMyDBObject() throws IOException {
         if (myDBObject == null) {
             myDBObject = new DataBase();
         }
         return myDBObject;
     }
 
-    public DataBase() throws SQLException, IOException {
+    public DataBase() throws IOException {
         fileInputStream = new FileInputStream("C:\\Users\\Yury\\Documents\\IdeaProjects\\Client-Server-App-V5(web)\\src\\main\\resources\\ServerConfig.properties");
         prop.load(fileInputStream);
         DB_URL = prop.getProperty("URL");
@@ -38,40 +35,6 @@ public class DataBase {
         DB_PASS = prop.getProperty("PASSWORD");
         ConnectToDB();
     }
-
-    //добавление нового юзера в таблицу (включая автоинкремент номера)
-    //кстати автоинкремент можно было сделать поинтереснее, но такой способ тоже работает
-    public void addNewUser(String name, String password) throws SQLException {
-        String SQL = "INSERT INTO MYUSERS (userid,USERNAME,USERPASSWORD) VALUES (?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-        Statement statement = myDBObject.getStatement();
-        ResultSet rs = statement.executeQuery("select * from myusers");
-        int rst = 0;
-        while (rs.next()) {
-            if (rs.isLast()) {
-                rst = rs.getRow();
-            }
-        }
-        preparedStatement.setInt(1, rst + 1);
-        preparedStatement.setString(2, name);
-        preparedStatement.setString(3, password);
-        preparedStatement.executeUpdate();
-    }
-
-    public boolean userExist(String name) throws SQLException {
-        String SQL = "select * from MYUSERS where username = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-        preparedStatement.setString(1, name);
-        preparedStatement.execute();
-        ResultSet rsUser = preparedStatement.getResultSet();
-        rsUser.next();
-        if (rsUser.getRow() != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 
     //коннектимся к БД
     public void ConnectToDB() {
@@ -94,29 +57,52 @@ public class DataBase {
     }
 
     //быстро получаем стейтмент для формирования запросов SQL
-    public Statement getStatement() throws SQLException {
+    public Statement getDBStatement() throws SQLException {
         return connection.createStatement();
     }
 
-    //смотрим список юзеров (всех)
-    public void getUserListDB() throws SQLException {
-        rs = pstmt.executeQuery("Select * from myUsers");
-        while (rs.next()) {
-            System.out.printf(rs.getString(1) + " " + rs.getString(2));
+    public Connection getDBConnection() {
+        return connection;
+    }
 
+    //добавление нового юзера в таблицу (включая автоинкремент номера)
+    //кстати автоинкремент можно было сделать поинтереснее, но такой способ тоже работает
+    public void userNew(String name, String password) throws SQLException {
+        String SQL = "INSERT INTO MYUSERS (userid,USERNAME,USERPASSWORD) VALUES (?,?,?)";
+        PreparedStatement preparedStatement = myDBObject.getDBConnection().prepareStatement(SQL);
+        Statement statement = myDBObject.getDBStatement();
+        ResultSet rs = statement.executeQuery("select max(userid) from myusers");
+        rs.next();
+        int rst = rs.getInt(1);
+
+        preparedStatement.setInt(1, rst + 1);
+        preparedStatement.setString(2, name);
+        preparedStatement.setString(3, password);
+        preparedStatement.executeUpdate();
+    }
+
+    public boolean userExist(String name) throws SQLException {
+        String SQL = "select * from MYUSERS where username = ?";
+        PreparedStatement preparedStatement = myDBObject.getDBConnection().prepareStatement(SQL);
+        preparedStatement.setString(1, name);
+        preparedStatement.execute();
+        ResultSet rsUser = preparedStatement.getResultSet();
+        rsUser.next();
+        if (rsUser.getRow() != 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     //Возвращаем список юзеров (всех) в листе
     public List<String> getUserListDBList() throws SQLException {
-        rs = pstmt.executeQuery("Select * from myUsers");
-        List<String> users= new ArrayList<>();
-        //rs.next();
+        ResultSet rs = myDBObject.getDBConnection().createStatement().executeQuery("Select * from myUsers");
+        List<String> users = new ArrayList<>();
         while (rs.next()) {
             users.add(rs.getString(2));
         }
 
         return users;
     }
-
 }

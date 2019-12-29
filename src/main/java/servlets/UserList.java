@@ -1,6 +1,6 @@
 package servlets;
 
-import main.java.DataBase;
+import model.DataBase;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet("/UserList")
 public class UserList extends HttpServlet {
@@ -34,11 +32,7 @@ public class UserList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        try {
-            DB = DataBase.getMyDBObject();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DB = DataBase.getMyDBObject();
 
         List<String> users = null;
         try {

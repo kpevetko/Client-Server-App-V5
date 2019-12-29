@@ -1,4 +1,4 @@
-<%@ page import="main.java.DataBase" %>
+<%@ page import="model.DataBase" %>
 <%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: WeAre
