@@ -80,11 +80,27 @@ public class DataBase {
         preparedStatement.setString(3, password);
         preparedStatement.executeUpdate();
     }
-
-    public boolean userExist(String name) throws SQLException {
+    //проверка при регистрации
+    public boolean userExistRegistration(String name) throws SQLException {
         String SQL = "select * from MYUSERS where username = ?";
         PreparedStatement preparedStatement = myDBObject.getDBConnection().prepareStatement(SQL);
         preparedStatement.setString(1, name);
+        preparedStatement.execute();
+        ResultSet rsUser = preparedStatement.getResultSet();
+        rsUser.next();
+        if (rsUser.getRow() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //проверка при входе
+    public boolean userExistLogin(String name, String pass) throws SQLException {
+        String SQL = "select * from MYUSERS where username = ? and userpassword = ?";
+        PreparedStatement preparedStatement = myDBObject.getDBConnection().prepareStatement(SQL);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, pass);
         preparedStatement.execute();
         ResultSet rsUser = preparedStatement.getResultSet();
         rsUser.next();

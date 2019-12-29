@@ -19,6 +19,9 @@ public class SendEndpointServlet extends HttpServlet {
         String myKey = request.getParameter("key");
         String message = request.getParameter("msg");
 
+        System.out.println(myKey);
+        System.out.println(message);
+
         if (message.indexOf(":::") > 0) {
             int i = 1;
             String userTo = null;
