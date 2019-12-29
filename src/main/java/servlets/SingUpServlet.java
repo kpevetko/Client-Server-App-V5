@@ -14,8 +14,6 @@ import java.io.IOException;
 
 @WebServlet("/SingUp")
 public class SingUpServlet extends HttpServlet {
-    DataBase DB = null;
-
     RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +22,7 @@ public class SingUpServlet extends HttpServlet {
         try {
             login = request.getParameter("userLogin");
             pass = request.getParameter("userPassword");
-            if (userService.userCheck(login, pass)) {
+            if (userService.userCheckToRegistration(login, pass)) {
                 request.setAttribute("Answer", "NotCreated");
             } else {
                 request.setAttribute("Answer", "CreatedNew");

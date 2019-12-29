@@ -13,8 +13,6 @@ public class Chat extends HttpServlet {
     RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         requestDispatcher.forward(request, response);
     }
 
