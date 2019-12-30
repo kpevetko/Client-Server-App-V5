@@ -21,8 +21,11 @@ public class ChatController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        requestDispatcher = request.getRequestDispatcher("views/Chat.jsp");
-        requestDispatcher.forward(request, response);
-        response.getWriter().println(ExEndpointWebController.getKeys().toString());
+        if(request.getSession().getAttribute("name")== null){
+        }else {
+            requestDispatcher = request.getRequestDispatcher("views/Chat.jsp");
+            requestDispatcher.forward(request, response);
+            response.getWriter().println(ExEndpointWebController.getKeys().toString());
+        }
     }
 }

@@ -1,5 +1,4 @@
-<%@ page import="java.util.List" %>
-<%@ page import="model.SessionsModel" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Yury
   Date: 22.12.2019
@@ -7,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -34,38 +34,41 @@
 <body>
 
 <!--ChatBox-->
-<div>
 
-    <label for="chatBox"> Чат:</label>
-    <textarea readonly class="chatWindow" name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
-              rows="20"></textarea>
-    <label for="userBox"> Пользователи онлайн:</label>
-    <textarea readonly class="chatWindow" name="userBox" id="userBox" cols="20" rows="20"></textarea>
-
-    <p>
-        <input size="40" type="text" name="textBox" id="textBox"/>
+<table width="200">
+    <tbody>
+    <tr>
+        <th><label for="chatBox"> Чат:</label></th>
+        <th><label for="userBox"> Пользователи онлайн:</label></th>
+    </tr>
+    <tr>
+        <td><textarea readonly name="chatBox" id="chatBox" cols="100" rows="20"></textarea></td>
+        <td><textarea readonly name="userBox" id="userBox" cols="20" rows="20"></textarea></td>
+    </tr>
+    <tr>
+        <td>
+            <input size="100" type="text" name="textBox" id="textBox"/>
+        </td>
+        <td>
             <button onclick="sendMessageToChat()">Отправить сообщение</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <p>
+
+
     </p>
     <button onclick="backToIndex()">Выход</button>
 </div>
-<!--Prochee Тут ВХОД И КОННЕКТ, ЕГО НУЖНО ПРИЦЕПИТЬ К ФОРМЕ ВХОДА-->
-<div class="table">
-    <div>
-        <span>Your Key:</span>
-        <input id="keyToConnect"/>
-    </div>
-    <button onclick="connect();return false;" class="button">Connect Using This Key</button>
-</div>
-
-<button onclick="ses()">SUDA JMI1</button>
-
 <script>
-
     var ws;
     var yourKey;
     connect = function () {
         //yourKey = document.getElementById('keyToConnect').value;
         //получаем имя из controllers/SingInController.java или controllers/SingUpController.java
+
         yourKey = ${name};
         var webSocketUrl = 'ws://localhost:8080/ex/' + yourKey;
         ws = new WebSocket(webSocketUrl);
