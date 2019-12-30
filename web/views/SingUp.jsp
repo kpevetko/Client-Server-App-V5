@@ -1,4 +1,4 @@
-<%@ page import="model.DataBase" %>
+<%@ page import="model.DataBaseModel" %>
 <%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: WeAre
@@ -25,6 +25,7 @@
         .goodinfo {
             color: #6b8e23;
         }
+
     </style>
 </head>
 <body>

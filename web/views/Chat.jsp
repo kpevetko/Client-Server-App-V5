@@ -33,15 +33,15 @@
 </head>
 <body>
 <!--ChatBox-->
-<div>
+<div >
     <label for="chatBox"> Чат:</label>
-    <textarea readonly class="chatWindow" name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
+    <textarea readonly class="chatWindow"  name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
               rows="20"></textarea>
     <label for="userBox"> Пользователи онлайн:</label>
-    <textarea readonly class="chatWindow" name="userBox" id="userBox" cols="20" rows="20"></textarea>
+    <textarea readonly  class="chatWindow" name="userBox" id="userBox" cols="20" rows="20"></textarea>
 
     <p>
-        <input size="40" class="chatWindow" type="text" name="textBox" id="textBox"/>
+        <input size="40"  type="text" name="textBox" id="textBox"/>
         <button onclick="sendMessageToChat()">Отправить сообщение</button>
     </p>
     <button onclick="backToIndex()">Выход</button>
