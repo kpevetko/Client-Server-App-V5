@@ -1,13 +1,13 @@
-package servlets;
+package model;
 
 import javax.websocket.Session;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+//для хранения сессий
+public class SessionsModel {
 
-public class Sessions {
-
-    private static Sessions instance;
+    private static SessionsModel instance;
 
     public Map<String, List<Session>> getSessions() {
         return sessions;
@@ -15,14 +15,14 @@ public class Sessions {
 
     private final Map<String, List<Session>> sessions;
 
-    public static synchronized Sessions getInstance() {
+    public static synchronized SessionsModel getInstance() {
         if (instance == null) {
-            instance = new Sessions();
+            instance = new SessionsModel();
         }
         return instance;
     }
 
-    Sessions() {
+    SessionsModel() {
         sessions = new HashMap<>();
     }
 

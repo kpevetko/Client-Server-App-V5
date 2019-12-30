@@ -1,13 +1,16 @@
 package model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.*;
 import java.util.*;
 
 
 public class DataBaseModel {
-    FileInputStream fileInputStream;
+    InputStream fileInputStream;
     //инициализируем специальный объект Properties
     Properties prop = new Properties();
     //поле коннекта
@@ -27,9 +30,15 @@ public class DataBaseModel {
         return myDBObject;
     }
 
-    public DataBaseModel() throws IOException {
-        fileInputStream = new FileInputStream("C:\\Users\\Yury\\Documents\\IdeaProjects\\Client-Server-App-V5(web)\\src\\main\\resources\\ServerConfig.properties");
-        prop.load(fileInputStream);
+    public DataBaseModel() {
+        try {
+            fileInputStream = getClass().getResourceAsStream("/ServerConfig.properties");
+            prop.load(fileInputStream);
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
+
         DB_URL = prop.getProperty("URL");
         DB_USER = prop.getProperty("LOGIN");
         DB_PASS = prop.getProperty("PASSWORD");

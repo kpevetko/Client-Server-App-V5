@@ -1,7 +1,6 @@
-package servlets;
+package controllers;
 
-
-import services.*;
+import services.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,35 +9,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
-@WebServlet("/SingUp")
-public class SingUpServlet extends HttpServlet {
+@WebServlet("/SingIn")
+public class SingInController extends HttpServlet {
     RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String login = null, pass = null;
+        String myLogin = request.getParameter("log");
+        String myPass = request.getParameter("pass");
         try {
-            login = request.getParameter("userLogin");
-            pass = request.getParameter("userPassword");
-            if (UserService.userCheckToRegistration(login, pass)) {
-                request.setAttribute("Answer", "NotCreated");
+            if (UserService.userCheckToLogin(myLogin, myPass)) {
+                response.getWriter().println("Accepted");
             } else {
-                request.setAttribute("Answer", "CreatedNew");
+                response.getWriter().println("NotAccepted");
             }
-        } catch (Exception e) {
-            return;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-
-        requestDispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.setAttribute("Answer", "NewConnect");
-        requestDispatcher = request.getRequestDispatcher("views/SingUp.jsp");
+        requestDispatcher = request.getRequestDispatcher("views/SingIn.jsp");
         requestDispatcher.forward(request, response);
-
     }
 }

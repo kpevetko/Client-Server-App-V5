@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="servlets.Sessions" %><%--
+<%@ page import="model.SessionsModel" %><%--
   Created by IntelliJ IDEA.
   User: Yury
   Date: 22.12.2019
@@ -33,15 +33,15 @@
 </head>
 <body>
 <!--ChatBox-->
-<div >
+<div>
     <label for="chatBox"> Чат:</label>
-    <textarea readonly class="chatWindow"  name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
+    <textarea readonly class="chatWindow" name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
               rows="20"></textarea>
     <label for="userBox"> Пользователи онлайн:</label>
-    <textarea readonly  class="chatWindow" name="userBox" id="userBox" cols="20" rows="20"></textarea>
+    <textarea readonly class="chatWindow" name="userBox" id="userBox" cols="20" rows="20"></textarea>
 
     <p>
-        <input size="40"  type="text" name="textBox" id="textBox"/>
+        <input size="40" type="text" name="textBox" id="textBox"/>
         <button onclick="sendMessageToChat()">Отправить сообщение</button>
     </p>
     <button onclick="backToIndex()">Выход</button>
@@ -96,21 +96,23 @@
             var message = document.getElementById("textBox").value;
             document.getElementById("textBox").value = "";
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/send?" + "msg=" + message + "&key=" + yourKey, true);
+            xhttp.open("POST", "/Chat?" + "msg=" + message + "&key=" + yourKey, true);
             xhttp.send();
         }
     }
 
     //список юзеров (обновляется раз в 10 секунд)
     function ses() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "http://localhost:8080/UserList", true);
-        xhttp.send();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("userBox").value = xhttp.responseText + "\n";
-            }
-        };
+        if (ws != null) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "http://localhost:8080/UserList", true);
+            xhttp.send();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("userBox").value = xhttp.responseText + "\n";
+                }
+            };
+        }
     }
 
     //обновляет раз в 10 секунд список юзеров

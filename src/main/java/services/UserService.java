@@ -4,6 +4,7 @@ import model.DataBaseModel;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 public class UserService {
 
@@ -39,5 +40,22 @@ public class UserService {
         } else {
             return false;
         }
+    }
+
+    public static List<String> userGetListOfUsers(){
+        List<String> users = null;
+        try {
+            DBObject = DataBaseModel.getMyDBObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            users = DBObject.getUserListDBList();
+        } catch (SQLException e) {
+            System.out.println("невозможно отобразить список пользователей");
+            e.printStackTrace();
+            return null;
+        }
+        return users;
     }
 }

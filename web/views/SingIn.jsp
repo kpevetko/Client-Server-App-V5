@@ -49,11 +49,11 @@
             var login = document.getElementById("userLogin").value;
             var pass = document.getElementById("userPassword").value;
 
-            xhttp.open("POST", "/login?" + "log=" + login + "&pass=" + pass, true);
+            xhttp.open("POST", "/SingIn?" + "log=" + login + "&pass=" + pass, true);
             xhttp.send();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    if (xhttp.responseText.trim() === "Accepted") {
+                    if (xhttp.responseText.trim() === "CreateNew") {
                         document.location.href = "/Chat";
                     } else {
                         document.getElementById("info").innerText = "Неверная пара логин/пароль";
