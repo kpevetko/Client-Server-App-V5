@@ -28,10 +28,13 @@ public class SingUpController extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         requestDispatcher = request.getRequestDispatcher("views/SingUp.jsp");
         requestDispatcher.forward(request, response);
+
     }
 }

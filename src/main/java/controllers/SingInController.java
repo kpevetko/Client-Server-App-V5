@@ -20,7 +20,8 @@ public class SingInController extends HttpServlet {
         String myPass = request.getParameter("pass");
         try {
             if (UserService.userCheckToLogin(myLogin, myPass)) {
-                response.getWriter().println("Accepted");
+                request.getSession().setAttribute("name",myLogin);
+                response.sendRedirect("/Chat");
             } else {
                 response.getWriter().println("NotAccepted");
             }

@@ -53,10 +53,10 @@
             xhttp.send();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    if (xhttp.responseText.trim() === "CreateNew") {
-                        document.location.href = "/Chat";
-                    } else {
+                    if (xhttp.responseText.trim() === "NotAccepted") {
                         document.getElementById("info").innerText = "Неверная пара логин/пароль";
+                    } else {
+                        document.location.href = "/Chat";
                     }
                 }
             };

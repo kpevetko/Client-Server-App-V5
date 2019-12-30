@@ -17,7 +17,7 @@ public class ChatController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String myKey = request.getParameter("key");
         String message = request.getParameter("msg");
-        MessageService.sendMessage(message,myKey);
+        MessageService.sendMessage(message, myKey);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
