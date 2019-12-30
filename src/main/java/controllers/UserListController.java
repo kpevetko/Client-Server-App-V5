@@ -1,6 +1,8 @@
-package servlets;
+package controllers;
 
 import model.DataBaseModel;
+import model.SessionsModel;
+import services.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,14 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/UserList")
-public class UserList extends HttpServlet {
-    DataBaseModel DB = null;
-
+public class UserListController extends HttpServlet {
     RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //возвращает список юзеров в онлайне
-        Sessions ses = Sessions.getInstance();
+        SessionsModel ses = SessionsModel.getInstance();
         System.out.println(ses.getSessions().size());
         List ll = new ArrayList<>(ses.getSessions().keySet());
         for (int i = 0; i<ll.size(); i++ ) {
@@ -31,16 +31,8 @@ public class UserList extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        DB = DataBaseModel.getMyDBObject();
-
-        List<String> users = null;
-        try {
-            users = DB.getUserListDBList();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       request.setAttribute("Users",users);
+        List<String> users = UserService.userGetListOfUsers();
+        request.setAttribute("Users", users);
 
         requestDispatcher = request.getRequestDispatcher("views/UserList.jsp");
         requestDispatcher.forward(request,response);

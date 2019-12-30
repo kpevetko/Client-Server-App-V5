@@ -17,68 +17,51 @@
         .info {
             color: #5063ff;
         }
-
-        .badinfo {
-            color: #ff5f5d;
-        }
-
-        .goodinfo {
-            color: #6b8e23;
-        }
-
     </style>
 </head>
 <body>
-Регистрация в системе
-<form id="createNewUser" method="post">
-    <%
-        if (request.getAttribute("Answer").equals("NewConnect")) {
-    %>
-    <p class="info"><label> Введите данные </label></p>
-    <%
-    } else if (request.getAttribute("Answer").equals("CreatedNew")) {
-    %>
-    <p class="goodinfo"><label> Создан новый пользователь </label></p>
-    <!--переход на 1 страницу-->
-    <META HTTP-EQUIV="REFRESH" CONTENT="1; URL=/">
-    <%
-    } else if (request.getAttribute("Answer").equals("NotCreated")) {
-    %>
-    <p class="badinfo"><label> Такой пользователь уже существует </label></p>
-    <%
-    } else {
-    %>
-    <p class="badinfo"><label> Что-то пошло не так... </label></p>
-    <%
-        }
-    %>
-
-    <p> Логин: <input name="userLogin" type="text" placeholder="Логин" form="createNewUser" required
+<div>
+    <label class="info" id="info"></label>
+    <p> Логин: <input id="userLogin" type="text" placeholder="Логин" required
                       pattern="^[0-9a-zA-Z]+$"/></p>
-    <p> Пароль: <input name="userPassword" type="password" placeholder="Пароль" form="createNewUser" required
+    <p> Пароль: <input id="userPassword" type="password" placeholder="Пароль" required
                        pattern="^[0-9a-zA-Z]+$"/></p>
+
     <p>
-        <input type="submit" value="Зарегистрироваться" form="createNewUser"/>
-        <input type="reset" value="Стереть" form="createNewUser"/>
+        <button onclick="registrationInChat()">Войти</button>
+        <button onclick="backToIndex()">Назад</button>
     </p>
-
-
-</form>
-<script>
-    function x() {
-        <%
-        if(request.getAttribute("LL")!=null){
-
-        }else {
-
-        }
-        %>
-    }</script>
-<form method="get">
-
-    <button type="submit" formaction="/">Назад</button>
-</form>
+</div>
 
 
 </body>
+<script>
+
+    function registrationInChat() {
+        if (document.getElementById("userLogin").value != null && document.getElementById("userLogin").value !== "" && document.getElementById("userPassword").value != null && document.getElementById("userPassword").value !== "") {
+            var xhttp = new XMLHttpRequest();
+            var login = document.getElementById("userLogin").value;
+            var pass = document.getElementById("userPassword").value;
+
+            xhttp.open("POST", "/SingUp?" + "log=" + login + "&pass=" + pass, true);
+            xhttp.send();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (xhttp.responseText.trim() === "CreateNew") {
+                        document.location.href = "/Chat";
+                    } else {
+                        document.getElementById("info").innerText = "Такой пользователь уже существует";
+                    }
+                }
+            };
+        } else {
+            document.getElementById("info").innerText = "Введите логин и пароль";
+        }
+
+    }
+
+    function backToIndex() {
+        document.location.href = "/"
+    }
+</script>
 </html>

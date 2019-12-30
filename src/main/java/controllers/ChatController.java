@@ -1,4 +1,6 @@
-package servlets;
+package controllers;
+
+import services.MessageService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,16 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/SingIn")
-public class SingInServlet extends HttpServlet {
+@WebServlet("/Chat")
+public class ChatController extends HttpServlet {
     RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        requestDispatcher.forward(request, response);
+        String myKey = request.getParameter("key");
+        String message = request.getParameter("msg");
+        MessageService.sendMessage(message,myKey);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        requestDispatcher = request.getRequestDispatcher("views/SingIn.jsp");
+        requestDispatcher = request.getRequestDispatcher("views/Chat.jsp");
         requestDispatcher.forward(request, response);
+        response.getWriter().println(ExEndpointWebController.getKeys().toString());
     }
 }
