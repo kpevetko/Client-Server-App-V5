@@ -25,8 +25,6 @@
             min-width: 100px;
             float: left;
             font-weight: bold;
-
-
         }
     </style>
     <title>Вход</title>

@@ -22,7 +22,6 @@ public class UserListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //возвращает список юзеров в онлайне
         SessionsModel ses = SessionsModel.getInstance();
-        System.out.println(ses.getSessions().size());
         List ll = new ArrayList<>(ses.getSessions().keySet());
         for (int i = 0; i<ll.size(); i++ ) {
             response.getWriter().println(ll.get(i));
