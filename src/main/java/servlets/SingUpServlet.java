@@ -1,7 +1,6 @@
 package servlets;
 
 
-import model.DataBase;
 import services.*;
 
 import javax.servlet.RequestDispatcher;
@@ -22,7 +21,7 @@ public class SingUpServlet extends HttpServlet {
         try {
             login = request.getParameter("userLogin");
             pass = request.getParameter("userPassword");
-            if (userService.userCheckToRegistration(login, pass)) {
+            if (UserService.userCheckToRegistration(login, pass)) {
                 request.setAttribute("Answer", "NotCreated");
             } else {
                 request.setAttribute("Answer", "CreatedNew");

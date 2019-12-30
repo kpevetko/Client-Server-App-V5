@@ -1,7 +1,7 @@
-package servlets;
+package controllers;
 
 
-import services.userService;
+import services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +12,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/login")
-public class LogInUserServlet extends HttpServlet {
+public class LogInUserController extends HttpServlet {
     //RequestDispatcher requestDispatcher = null;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String myLogin = request.getParameter("log");
         String myPass = request.getParameter("pass");
         try {
-            if (userService.userCheckToLogin(myLogin, myPass)) {
+            if (UserService.userCheckToLogin(myLogin, myPass)) {
                 response.getWriter().println("Accepted");
             } else {
                 response.getWriter().println("NotAccepted");

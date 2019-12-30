@@ -1,18 +1,18 @@
 package services;
 
-import model.DataBase;
+import model.DataBaseModel;
 
 import java.io.IOException;
 import java.sql.*;
 
-public class userService {
+public class UserService {
 
-    private static DataBase DBObject;
+    private static DataBaseModel DBObject;
 
     public static boolean userCheckToRegistration(String login, String pass) throws SQLException {
 
         try {
-            DBObject = DataBase.getMyDBObject();
+            DBObject = DataBaseModel.getMyDBObject();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,7 +29,7 @@ public class userService {
     public static boolean userCheckToLogin(String login, String pass) throws SQLException {
 
         try {
-            DBObject = DataBase.getMyDBObject();
+            DBObject = DataBaseModel.getMyDBObject();
         } catch (IOException e) {
             e.printStackTrace();
         }

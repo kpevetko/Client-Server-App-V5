@@ -1,6 +1,6 @@
 package servlets;
 
-import model.DataBase;
+import model.DataBaseModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet("/UserList")
 public class UserList extends HttpServlet {
-    DataBase DB = null;
+    DataBaseModel DB = null;
 
     RequestDispatcher requestDispatcher = null;
 
@@ -32,7 +32,7 @@ public class UserList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        DB = DataBase.getMyDBObject();
+        DB = DataBaseModel.getMyDBObject();
 
         List<String> users = null;
         try {

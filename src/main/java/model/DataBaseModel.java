@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.*;
 
 
-public class DataBase {
+public class DataBaseModel {
     FileInputStream fileInputStream;
     //инициализируем специальный объект Properties
     Properties prop = new Properties();
@@ -17,17 +17,17 @@ public class DataBase {
     //
     Statement pstmt = null;
     //приватная статическая ссылка класса на его объект
-    private static DataBase myDBObject;
+    private static DataBaseModel myDBObject;
 
     //открытый статический метод используемый для получения объекта нашего класса
-    public static DataBase getMyDBObject() throws IOException {
+    public static DataBaseModel getMyDBObject() throws IOException {
         if (myDBObject == null) {
-            myDBObject = new DataBase();
+            myDBObject = new DataBaseModel();
         }
         return myDBObject;
     }
 
-    public DataBase() throws IOException {
+    public DataBaseModel() throws IOException {
         fileInputStream = new FileInputStream("C:\\Users\\Yury\\Documents\\IdeaProjects\\Client-Server-App-V5(web)\\src\\main\\resources\\ServerConfig.properties");
         prop.load(fileInputStream);
         DB_URL = prop.getProperty("URL");
