@@ -68,7 +68,6 @@
     connect = function () {
         //yourKey = document.getElementById('keyToConnect').value;
         //получаем имя из controllers/SingInController.java или controllers/SingUpController.java
-
         yourKey = ${name};
         var webSocketUrl = 'ws://localhost:8080/ex/' + yourKey;
         ws = new WebSocket(webSocketUrl);

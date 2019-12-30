@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/Chat")
 public class ChatController extends HttpServlet {
@@ -17,7 +18,11 @@ public class ChatController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String myKey = request.getParameter("key");
         String message = request.getParameter("msg");
-        MessageService.sendMessage(message, myKey);
+        try {
+            MessageService.sendMessage(message, myKey);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

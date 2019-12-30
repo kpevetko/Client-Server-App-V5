@@ -130,4 +130,17 @@ public class DataBaseModel {
 
         return users;
     }
+
+    //пишет в лог
+    public static void writeToLog(String messageToWrite) throws SQLException {
+        String SQL = "INSERT INTO logs (id, mylog) VALUES (?,?)";
+        PreparedStatement preparedStatement = myDBObject.getDBConnection().prepareStatement(SQL);
+        Statement statement = myDBObject.getDBStatement();
+        ResultSet rs = statement.executeQuery("select max(id) from logs");
+        rs.next();
+        int rst = rs.getInt(1);
+        preparedStatement.setInt(1, rst + 1);
+        preparedStatement.setString(2, messageToWrite);
+        preparedStatement.executeUpdate();
+    }
 }
