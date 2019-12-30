@@ -48,7 +48,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     if (xhttp.responseText.trim() === "CreateNew") {
-                        document.location.href = "/Chat";
+                        document.getElementById("info").innerText = "Пользователь создан, теперь вы можете зайти в систему";
                     } else {
                         document.getElementById("info").innerText = "Такой пользователь уже существует";
                     }

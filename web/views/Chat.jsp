@@ -32,8 +32,10 @@
     </style>
 </head>
 <body>
+
 <!--ChatBox-->
 <div>
+
     <label for="chatBox"> Чат:</label>
     <textarea readonly class="chatWindow" name="chatBox" id="chatBox" placeholder="Не более 200 символов" cols="100"
               rows="20"></textarea>
@@ -42,11 +44,10 @@
 
     <p>
         <input size="40" type="text" name="textBox" id="textBox"/>
-        <button onclick="sendMessageToChat()">Отправить сообщение</button>
+            <button onclick="sendMessageToChat()">Отправить сообщение</button>
     </p>
     <button onclick="backToIndex()">Выход</button>
 </div>
-
 <!--Prochee Тут ВХОД И КОННЕКТ, ЕГО НУЖНО ПРИЦЕПИТЬ К ФОРМЕ ВХОДА-->
 <div class="table">
     <div>
@@ -56,7 +57,6 @@
     <button onclick="connect();return false;" class="button">Connect Using This Key</button>
 </div>
 
-
 <button onclick="ses()">SUDA JMI1</button>
 
 <script>
@@ -64,7 +64,9 @@
     var ws;
     var yourKey;
     connect = function () {
-        yourKey = document.getElementById('keyToConnect').value;
+        //yourKey = document.getElementById('keyToConnect').value;
+        //получаем имя из controllers/SingInController.java или controllers/SingUpController.java
+        yourKey = ${name};
         var webSocketUrl = 'ws://localhost:8080/ex/' + yourKey;
         ws = new WebSocket(webSocketUrl);
         ws.onopen = function () {
@@ -80,6 +82,9 @@
             appendMessage(err);
         };
     };
+    //коннект сразу при загрузке страницы
+    connect();
+
     appendMessage = function (text) {
         document.getElementById("chatBox").value += text + "\n";
     };
