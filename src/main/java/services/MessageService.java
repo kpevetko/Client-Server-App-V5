@@ -1,8 +1,10 @@
 package services;
 
+import model.DataBaseModel;
 import model.SessionsModel;
 
 import javax.websocket.Session;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +15,7 @@ public class MessageService {
     //если он есть, сплитим сообщение, делим его на 2 части и отсылаем указанному человеку
     //если нет, то отсылаем всем
     //так же перед отправкой каждое сообщение стилизуется
-    public static void sendMessage(String message, String myKey) {
+    public static void sendMessage(String message, String myKey) throws SQLException {
         if (message.indexOf(":::") > 0) {
             int i = 1;
             String userTo = null;
@@ -28,11 +30,12 @@ public class MessageService {
                         break;
                     } else {
                         //добавляем проверку чтобы не отправлялись сообщения адресованые самому себе
-                        if(myKey.equals(userTo)){
+                        if (myKey.equals(userTo)) {
                             sendMe("Нельзя писать сообщение самому себе", myKey);
-                        }else {
+                        } else {
                             send("<" + myKey + "> пишет вам личное сообщение: " + retval, userTo);
                             sendMe("Вы пишете личное сообщение <" + userTo + ">: " + retval, myKey);
+                            DataBaseModel.writeToLog(myKey + " пишет личное сообщение " + userTo + " " + retval);
                         }
                     }
 
@@ -42,6 +45,7 @@ public class MessageService {
         } else {
             message = "<" + myKey + "> пишет: " + message;
             sendAll(message);
+            DataBaseModel.writeToLog(message);
         }
     }
 
